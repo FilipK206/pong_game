@@ -37,6 +37,10 @@ while running:
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
 
+    # collisions with players rectangles
+    if ball.colliderect(player) or ball.colliderect(opponent):
+        ball_speed_x *= -1
+
     # static background graphic
     screen.fill(background_color)
     pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
