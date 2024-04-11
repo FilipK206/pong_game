@@ -40,6 +40,7 @@ ball_speed_x = 7
 ball_speed_y = 7
 
 player_speed = 0
+opponent_speed = 7
 
 while running:
     for event in pygame.event.get():
@@ -60,6 +61,21 @@ while running:
 
     ball_animation()
     player.y += player_speed
+
+    if player.top <= 0:
+        player.top = 0
+    if player.bottom >= screen_height:
+        player.bottom = screen_height
+
+    if opponent.top < ball.y:
+        opponent.top += opponent_speed
+    if opponent.bottom > ball.y:
+        opponent.bottom -= opponent_speed
+
+    if opponent.top <= 0:
+        opponent.top = 0
+    if opponent.bottom >= screen_height:
+        opponent.bottom = screen_height
 
     # static background graphic
     screen.fill(background_color)
