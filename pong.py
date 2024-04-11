@@ -35,16 +35,31 @@ opponent = pygame.Rect(10, screen_height/2 - 70, 10, 140)
 
 background_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
+
 ball_speed_x = 7
 ball_speed_y = 7
+
+player_speed = 0
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                player_speed += 7
+            if event.key == pygame.K_UP:
+                player_speed -= 7
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_DOWN:
+                player_speed -= 7
+            if event.key == pygame.K_UP:
+                player_speed += 7
 
     ball_animation()
+    player.y += player_speed
 
     # static background graphic
     screen.fill(background_color)
