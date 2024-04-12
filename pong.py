@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, random
 
 def draw_mov_obj():
     # moving objects
@@ -10,7 +10,6 @@ def static_background():
     screen.fill(background_color)
     pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
     pygame.draw.ellipse(screen, light_grey, [screen_width / 2 - 110, screen_height / 2 - 110, 220, 220], 2)
-
 
 def ball_animation():
     global ball_speed_x, ball_speed_y
@@ -48,8 +47,10 @@ def player_animation():
         player.bottom = screen_height
 
 def ball_restart():
+    global ball_speed_x, ball_speed_y
     ball.center = (screen_width/2, screen_height/2)
-
+    ball_speed_x *= random.choice((1,-1))
+    ball_speed_y *= random.choice((1, -1))
 
 pygame.init()
 
