@@ -107,7 +107,7 @@ timer_event = pygame.event.custom_type()
 pygame.time.set_timer(timer_event, 1000)
 
 clock = pygame.time.Clock()
-game_time_sec = 60
+game_time_sec = 2
 
 main_font = pygame.font.SysFont("Bahnschrift", 15, bold=False)
 timer_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
@@ -187,13 +187,13 @@ def game_over_menu():
     end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
     run = True
     while run:
-        static_background()
+        screen.fill(background_color)
 
         begin_label = title_font.render("Game Over!", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 190))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
 
-        begin_label = end_font.render("You've lost.", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 140))
+        begin_label = end_font.render(f"You've lost. Your score: {score_player}", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
 
         pygame.display.update()
 
@@ -206,13 +206,13 @@ def winning_menu():
     end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
     run = True
     while run:
-        static_background()
+        screen.fill(background_color)
 
         begin_label = title_font.render("Win!!!", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 190))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
 
         begin_label = end_font.render(f"You've won. Your score: {score_player}", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 140))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
 
         pygame.display.update()
 
