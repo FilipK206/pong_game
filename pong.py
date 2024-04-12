@@ -1,5 +1,17 @@
 import pygame, sys
 
+def draw_mov_obj():
+    # moving objects
+    pygame.draw.rect(screen, light_grey, player)
+    pygame.draw.rect(screen, light_grey, opponent)
+    pygame.draw.ellipse(screen, light_grey, ball)
+def static_background():
+    # static background graphic
+    screen.fill(background_color)
+    pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
+    pygame.draw.ellipse(screen, light_grey, [screen_width / 2 - 110, screen_height / 2 - 110, 220, 220], 2)
+
+
 def ball_animation():
     global ball_speed_x, ball_speed_y
     # moves from the start
@@ -78,21 +90,14 @@ while running:
                 player_speed -= 7
             if event.key == pygame.K_UP:
                 player_speed += 7
+    
+    static_background()
+    draw_mov_obj()
 
     ball_animation()
     opponent_movement()
     player_animation()
 
-
-    # static background graphic
-    screen.fill(background_color)
-    pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
-    pygame.draw.ellipse(screen, light_grey, [screen_width / 2 - 110, screen_height / 2 - 110, 220, 220], 2)
-
-    # moving objects
-    pygame.draw.rect(screen, light_grey, player)
-    pygame.draw.rect(screen, light_grey, opponent)
-    pygame.draw.ellipse(screen, light_grey, ball)
 
     pygame.display.flip()
 
