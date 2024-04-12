@@ -20,7 +20,7 @@ def ball_animation():
 
     # bouncing ball animation
     if ball.left <= 0 or ball.right >= screen_width:
-        ball_speed_x *= -1
+        ball_restart()
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
 
@@ -47,6 +47,8 @@ def player_animation():
     if player.bottom >= screen_height:
         player.bottom = screen_height
 
+def ball_restart():
+    ball.center = (screen_width/2, screen_height/2)
 
 
 pygame.init()
@@ -90,10 +92,12 @@ while running:
                 player_speed -= 7
             if event.key == pygame.K_UP:
                 player_speed += 7
-    
+
+    # draws objects
     static_background()
     draw_mov_obj()
 
+    # creates movements
     ball_animation()
     opponent_movement()
     player_animation()
