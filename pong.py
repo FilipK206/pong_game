@@ -16,6 +16,13 @@ def static_background():
 
     screen.blit(score_player_label, (screen_width - 150, 0 + 15))
     screen.blit(score_opponent_label, (0 + 50, 0 + 15))
+
+    lives_player_label = main_font.render(f"Lives: {player_lives}", 1, light_grey)
+    lives_opponent_label = main_font.render(f"Lives: {opponent_lives}", 1, light_grey)
+
+    screen.blit(lives_player_label, (screen_width - 150, 0 + 35))
+    screen.blit(lives_opponent_label, (0 + 50, 0 + 35))
+
 def count_score_player():
     global score_player
     score_player += 1
@@ -23,6 +30,14 @@ def count_score_player():
 def count_score_opponent():
     global score_opponent
     score_opponent += 1
+
+def count_player_lives():
+    global player_lives
+    player_lives -= 1
+
+def count_opponent_lives():
+    global opponent_lives
+    opponent_lives -= 1
 
 
 def ball_animation():
@@ -32,8 +47,13 @@ def ball_animation():
     ball.y += ball_speed_y
 
     # bouncing ball animation
-    if ball.left <= 0 or ball.right >= screen_width:
+    if ball.left <= 0:
         ball_restart()
+        count_opponent_lives()
+    if ball.right >= screen_width:
+        ball_restart()
+        count_player_lives()
+        
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
 
@@ -91,6 +111,8 @@ opponent = pygame.Rect(10, screen_height/2 - 70, 10, 140)
 
 score_player = 0
 score_opponent = 0
+player_lives = 5
+opponent_lives = 5
 
 background_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
