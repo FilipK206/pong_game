@@ -27,9 +27,9 @@ def static_background():
     screen.blit(lives_player_label, (screen_width - 150, 0 + 35))
     screen.blit(lives_opponent_label, (0 + 50, 0 + 35))
     
-    timer_label = main_font.render(f"Timer: {game_time_sec} sec", 1, light_grey)
+    timer_label = timer_font.render(f"Timer: {game_time_sec} sec", 1, light_grey)
 
-    screen.blit(timer_label, (screen_width/2 - 43, 0 + 15))
+    screen.blit(timer_label, (screen_width/2 - 70, 0 + 20))
 
 def count_score_player():
     global score_player
@@ -109,6 +109,8 @@ clock = pygame.time.Clock()
 game_time_sec = 60
 
 main_font = pygame.font.SysFont("Bahnschrift", 15, bold=False)
+timer_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
+
 screen_width = 1080
 screen_height = 720
 screen = pygame.display.set_mode((screen_width, screen_height))
