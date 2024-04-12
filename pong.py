@@ -55,10 +55,10 @@ def ball_animation():
     ball.y += ball_speed_y
 
     # bouncing ball animation
-    if ball.left <= -25:
+    if ball.left <= - 45:
         ball_restart()
         count_opponent_lives()
-    if ball.right >= screen_width + 25:
+    if ball.right >= screen_width + 45:
         ball_restart()
         count_player_lives()
 
@@ -118,8 +118,8 @@ pygame.display.set_caption('Pong')
 running = True
 
 ball = pygame.Rect(screen_width/2 - 10, screen_height/2 - 10, 20, 20)
-player = pygame.Rect(screen_width - 20, screen_height/2 - 70, 10, 140)
-opponent = pygame.Rect(10, screen_height/2 - 70, 10, 140)
+player = pygame.Rect(screen_width - 25, screen_height/2 - 70, 10, 140)
+opponent = pygame.Rect(15, screen_height/2 - 70, 10, 140)
 
 score_player = 0
 score_opponent = 0
