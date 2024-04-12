@@ -27,6 +27,11 @@ Once installed, you can run the game by executing the `pong.py` file.
 - If you lose all your lives, the game ends and displays a "Game Over" screen.
 - If you win or the timer runs out, the game displays a "Win" screen.
 
+## Gameplay
+
+- The player has limited lives. If they lose all lives, the game ends and displays a "Game Over" screen.
+- If the player wins or the timer runs out, the game displays a "Win" screen.
+
 ## Credits
 
 This game was created by Filip Kozal.
