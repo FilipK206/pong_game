@@ -107,7 +107,7 @@ timer_event = pygame.event.custom_type()
 pygame.time.set_timer(timer_event, 1000)
 
 clock = pygame.time.Clock()
-game_time_sec = 2
+game_time_sec = 60
 
 main_font = pygame.font.SysFont("Bahnschrift", 15, bold=False)
 timer_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
