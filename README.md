@@ -20,6 +20,7 @@ Pong is a classic arcade game where players control paddles and try to hit a bal
 ## Installation
 
 To run the game, you need to have Python installed on your system. You can install Pygame library using pip:
+
 pip install pygame
 
 Once installed, you can run the game by executing the `pong.py` file.
