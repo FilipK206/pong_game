@@ -136,37 +136,59 @@ ball_speed_y = 7 * random.choice((1, -1))
 
 player_speed = 0
 opponent_speed = 7
+def main():
+    global screen_width, screen_height
+    global player_speed, game_time_sec
 
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN:
-                player_speed += 7
-            if event.key == pygame.K_UP:
-                player_speed -= 7
-        
-        if event.type == timer_event:
-            game_time_sec -= 1
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    player_speed += 7
+                if event.key == pygame.K_UP:
+                    player_speed -= 7
 
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_DOWN:
-                player_speed -= 7
-            if event.key == pygame.K_UP:
-                player_speed += 7
+            if event.type == timer_event:
+                game_time_sec -= 1
 
-    # draws objects
-    static_background()
-    draw_mov_obj()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_DOWN:
+                    player_speed -= 7
+                if event.key == pygame.K_UP:
+                    player_speed += 7
 
-    # creates movements
-    ball_animation()
-    opponent_movement()
-    player_animation()
+        # draws objects
+        static_background()
+        draw_mov_obj()
+
+        # creates movements
+        ball_animation()
+        opponent_movement()
+        player_animation()
 
 
-    pygame.display.flip()
+        pygame.display.flip()
 
-    clock.tick(60)
+        clock.tick(60)
+
+def main_menu():
+    title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
+    run = True
+    while run:
+        static_background()
+
+        title_label = title_font.render("Press the mouse to begin...", 1, (255, 255, 255))
+        screen.blit(title_label, (screen_width / 2 - title_label.get_width() / 2, screen_height / 2 - 200))
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                main()
+    pygame.quit()
+main_menu()
