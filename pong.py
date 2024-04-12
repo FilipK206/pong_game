@@ -171,7 +171,7 @@ def main():
         opponent_movement()
         player_animation()
 
-        if player_lives < 0 or opponent_lives < 0 or game_time_sec < 0:
+        if player_lives < 0 or game_time_sec < 0:
             game_over_menu()
 
 
