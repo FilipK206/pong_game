@@ -71,8 +71,8 @@ opponent = pygame.Rect(10, screen_height/2 - 70, 10, 140)
 background_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
 
-ball_speed_x = 7
-ball_speed_y = 7
+ball_speed_x = 7 * random.choice((1, -1))
+ball_speed_y = 7 * random.choice((1, -1))
 
 player_speed = 0
 opponent_speed = 7
