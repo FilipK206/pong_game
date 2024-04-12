@@ -1,5 +1,7 @@
 # Pong Game
 
+![pong_game](https://github.com/FilipK206/pong_game/assets/109867923/630f71e6-d94e-4dd9-ac22-ee9c02365a84)
+
 This is a simple Pong game implemented in Python using the Pygame library.
 
 ## Description
