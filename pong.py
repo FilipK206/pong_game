@@ -13,8 +13,6 @@ def static_background():
     pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
     pygame.draw.ellipse(screen, light_grey, [screen_width / 2 - 110, screen_height / 2 - 110, 220, 220], 2)
 
-
-
 def dynamic_background():
     # creates labels for scores
     score_player_label = main_font.render(f"Score Player: {score_player}", 1, light_grey)
@@ -173,10 +171,34 @@ def main():
         opponent_movement()
         player_animation()
 
+        if player_lives < 0 or opponent_lives < 0 or game_time_sec < 0:
+            game_over_menu()
+
 
         pygame.display.flip()
 
         clock.tick(60)
+
+def game_over_menu():
+    title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
+    end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
+    run = True
+    while run:
+        static_background()
+
+        begin_label = title_font.render("Game Over!", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 190))
+
+        begin_label = end_font.render("You've lost.", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 140))
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+
 
 def main_menu():
     title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
