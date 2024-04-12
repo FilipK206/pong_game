@@ -1,4 +1,6 @@
-import pygame, sys, random
+import pygame
+import sys
+import random
 
 # Function to draw moving objects
 def draw_mov_obj():
@@ -21,12 +23,14 @@ def dynamic_background():
     # Render and blit score labels
     score_player_label = main_font.render(f"Score Player: {score_player}", 1, light_grey)
     score_opponent_label = main_font.render(f"Score Opponent: {score_opponent}", 1, light_grey)
+
     screen.blit(score_player_label, (screen_width - 150, 0 + 15))
     screen.blit(score_opponent_label, (0 + 50, 0 + 15))
 
     # Render and blit life labels
     lives_player_label = main_font.render(f"Lives: {player_lives}", 1, light_grey)
     lives_opponent_label = main_font.render(f"Lives: {opponent_lives}", 1, light_grey)
+
     screen.blit(lives_player_label, (screen_width - 150, 0 + 35))
     screen.blit(lives_opponent_label, (0 + 50, 0 + 35))
 
@@ -56,7 +60,8 @@ def count_opponent_lives():
 
 # Function to animate the ball
 def ball_animation():
-    global ball_speed_x, ball_speed_y, score_opponent, score_player
+    global ball_speed_x, ball_speed_y
+    global score_opponent, score_player
 
     # Move the ball
     ball.x += ball_speed_x
@@ -84,24 +89,30 @@ def ball_animation():
 def opponent_movement():
     if opponent.top < ball.y:
         opponent.top += opponent_speed
+
     if opponent.bottom > ball.y:
         opponent.bottom -= opponent_speed
+
     if opponent.top <= 0:
         opponent.top = 0
+
     if opponent.bottom >= screen_height:
         opponent.bottom = screen_height
 
 # Function to move the player paddle
 def player_animation():
     player.y += player_speed
+
     if player.top <= 0:
         player.top = 0
+
     if player.bottom >= screen_height:
         player.bottom = screen_height
 
 # Function to reset the ball position and speed
 def ball_restart():
     global ball_speed_x, ball_speed_y
+
     ball.center = (screen_width/2, screen_height/2)
     ball_speed_x *= random.choice((1,-1))
     ball_speed_y *= random.choice((1, -1))
@@ -132,36 +143,45 @@ pygame.display.set_caption('Pong')
 
 # Initialize game variables
 running = True
+
 ball = pygame.Rect(screen_width/2 - 10, screen_height/2 - 10, 20, 20)
 player = pygame.Rect(screen_width - 25, screen_height/2 - 70, 10, 140)
 opponent = pygame.Rect(15, screen_height/2 - 70, 10, 140)
+
 score_player = 0
 score_opponent = 0
 player_lives = 5
 opponent_lives = 5
+
 background_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
+
 ball_speed_x = 7 * random.choice((1, -1))
 ball_speed_y = 7 * random.choice((1, -1))
+
 player_speed = 0
 opponent_speed = 7
 
 # Main game loop
 def main():
-    global screen_width, screen_height, player_speed, game_time_sec, running
+    global screen_width, screen_height
+    global player_speed, game_time_sec
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     player_speed += 7
                 if event.key == pygame.K_UP:
                     player_speed -= 7
+
             if event.type == timer_event:
                 game_time_sec -= 1
+
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
                     player_speed -= 7
@@ -181,6 +201,7 @@ def main():
         # Check for game over or win conditions
         if player_lives < 0:
             game_over_menu()
+
         if opponent_lives < 0 or game_time_sec < 0:
             winning_menu()
 
@@ -195,11 +216,15 @@ def game_over_menu():
     run = True
     while run:
         screen.fill(background_color)
+
         begin_label = title_font.render("Game Over!", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
+
         begin_label = end_font.render(f"You've lost. Your score: {score_player}", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
+
         pygame.display.update()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -211,11 +236,15 @@ def winning_menu():
     run = True
     while run:
         screen.fill(background_color)
+
         begin_label = title_font.render("Win!!!", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
+
         begin_label = end_font.render(f"You've won. Your score: {score_player}", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
+
         pygame.display.update()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -227,11 +256,15 @@ def main_menu():
     run = True
     while run:
         static_background()
+
         begin_label = title_font.render("Welcome to the Pong Game!", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 270))
+
         begin_label = begin_font.render("Press the mouse to begin...", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 180))
+
         pygame.display.update()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
