@@ -13,6 +13,9 @@ def static_background():
     pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
     pygame.draw.ellipse(screen, light_grey, [screen_width / 2 - 110, screen_height / 2 - 110, 220, 220], 2)
 
+
+
+def dynamic_background():
     # creates labels for scores
     score_player_label = main_font.render(f"Score Player: {score_player}", 1, light_grey)
     score_opponent_label = main_font.render(f"Score Opponent: {score_opponent}", 1, light_grey)
@@ -26,10 +29,10 @@ def static_background():
 
     screen.blit(lives_player_label, (screen_width - 150, 0 + 35))
     screen.blit(lives_opponent_label, (0 + 50, 0 + 35))
-    
+
     timer_label = timer_font.render(f"Timer: {game_time_sec} sec", 1, light_grey)
 
-    screen.blit(timer_label, (screen_width/2 - 70, 0 + 20))
+    screen.blit(timer_label, (screen_width / 2 - 70, 0 + 20))
 
 def count_score_player():
     global score_player
@@ -162,6 +165,7 @@ def main():
 
         # draws objects
         static_background()
+        dynamic_background()
         draw_mov_obj()
 
         # creates movements
@@ -176,12 +180,16 @@ def main():
 
 def main_menu():
     title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
+    begin_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
     run = True
     while run:
         static_background()
 
-        title_label = title_font.render("Press the mouse to begin...", 1, (255, 255, 255))
-        screen.blit(title_label, (screen_width / 2 - title_label.get_width() / 2, screen_height / 2 - 200))
+        begin_label = title_font.render("Welcome to the Pong Game!", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 270))
+
+        begin_label = begin_font.render("Press the mouse to begin...", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 180))
 
         pygame.display.update()
 
