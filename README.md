@@ -15,6 +15,8 @@ Pong is a classic arcade game where players control paddles and try to hit a bal
 - Lives system
 - Timer
 
+![Welcome](https://github.com/FilipK206/pong_game/assets/109867923/53e985a8-207a-4495-8bb2-adebb622be5f)
+
 ## Installation
 
 To run the game, you need to have Python installed on your system. You can install Pygame library using pip:
@@ -29,10 +31,7 @@ Once installed, you can run the game by executing the `pong.py` file.
 - If you lose all your lives, the game ends and displays a "Game Over" screen.
 - If you win or the timer runs out, the game displays a "Win" screen.
 
-## Gameplay
-
-- The player has limited lives. If they lose all lives, the game ends and displays a "Game Over" screen.
-- If the player wins or the timer runs out, the game displays a "Win" screen.
+![win](https://github.com/FilipK206/pong_game/assets/109867923/96cde56f-5bc7-4c10-9bf4-2aa098b5dac6)
 
 ## Credits
 
