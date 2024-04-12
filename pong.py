@@ -8,20 +8,28 @@ def draw_mov_obj():
 def static_background():
     # static background graphic
     screen.fill(background_color)
+
+    # draws match field lines
     pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
     pygame.draw.ellipse(screen, light_grey, [screen_width / 2 - 110, screen_height / 2 - 110, 220, 220], 2)
 
+    # creates labels for scores
     score_player_label = main_font.render(f"Score Player: {score_player}", 1, light_grey)
     score_opponent_label = main_font.render(f"Score Opponent: {score_opponent}", 1, light_grey)
 
     screen.blit(score_player_label, (screen_width - 150, 0 + 15))
     screen.blit(score_opponent_label, (0 + 50, 0 + 15))
 
+    # creates labels for lives
     lives_player_label = main_font.render(f"Lives: {player_lives}", 1, light_grey)
     lives_opponent_label = main_font.render(f"Lives: {opponent_lives}", 1, light_grey)
 
     screen.blit(lives_player_label, (screen_width - 150, 0 + 35))
     screen.blit(lives_opponent_label, (0 + 50, 0 + 35))
+    
+    timer_label = main_font.render(f"Timer: {game_time_sec} sec", 1, light_grey)
+
+    screen.blit(timer_label, (screen_width/2 - 43, 0 + 15))
 
 def count_score_player():
     global score_player
@@ -53,7 +61,7 @@ def ball_animation():
     if ball.right >= screen_width:
         ball_restart()
         count_player_lives()
-        
+
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
 
@@ -94,7 +102,11 @@ def ball_restart():
 pygame.init()
 pygame.font.init()
 
+timer_event = pygame.event.custom_type()
+pygame.time.set_timer(timer_event, 1000)
+
 clock = pygame.time.Clock()
+game_time_sec = 60
 
 main_font = pygame.font.SysFont("Bahnschrift", 15, bold=False)
 screen_width = 1080
@@ -133,6 +145,9 @@ while running:
                 player_speed += 7
             if event.key == pygame.K_UP:
                 player_speed -= 7
+        
+        if event.type == timer_event:
+            game_time_sec -= 1
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_DOWN:
