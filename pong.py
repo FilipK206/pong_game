@@ -171,8 +171,11 @@ def main():
         opponent_movement()
         player_animation()
 
-        if player_lives < 0 or game_time_sec < 0:
+        if player_lives < 0:
             game_over_menu()
+
+        if opponent_lives < 0 or game_time_sec < 0:
+            winning_menu()
 
 
         pygame.display.flip()
@@ -190,6 +193,25 @@ def game_over_menu():
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 190))
 
         begin_label = end_font.render("You've lost.", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 140))
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+def winning_menu():
+    title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
+    end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
+    run = True
+    while run:
+        static_background()
+
+        begin_label = title_font.render("Win!!!", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 190))
+
+        begin_label = end_font.render(f"You've won. Your score: {score_player}", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 140))
 
         pygame.display.update()
