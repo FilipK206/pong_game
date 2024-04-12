@@ -55,10 +55,10 @@ def ball_animation():
     ball.y += ball_speed_y
 
     # bouncing ball animation
-    if ball.left <= 0:
+    if ball.left <= -25:
         ball_restart()
         count_opponent_lives()
-    if ball.right >= screen_width:
+    if ball.right >= screen_width + 25:
         ball_restart()
         count_player_lives()
 
