@@ -1,3 +1,4 @@
+import math
 import pygame
 import sys
 import random
@@ -58,6 +59,24 @@ def count_opponent_lives():
     global opponent_lives
     opponent_lives -= 1
 
+def reflect_ball(ball, paddle):
+    global ball_speed_x, ball_speed
+
+    # Calculate the position of collision on the paddle
+    paddle_collision_point = ball.y + ball.height / 2 - (paddle.y + paddle.height / 2)
+
+    # Normalize the collision point to the range [-1, 1]
+    normalized_collision_point = paddle_collision_point / (paddle.height / 2)
+
+    # Calculate the reflection angle based on the normalized collision point
+    reflection_angle = normalized_collision_point * (math.pi / 4)  # Max bounce angle: 45 degrees
+
+    # Reverse the horizontal velocity and adjust the vertical velocity based on the reflection angle
+    ball_speed_x = -abs(ball_speed_x)
+    ball_speed_y = ball_speed * math.sin(reflection_angle)
+
+    return ball_speed_x, ball_speed_y
+
 # Function to animate the ball
 def ball_animation():
     global ball_speed_x, ball_speed_y
@@ -79,34 +98,25 @@ def ball_animation():
 
     # Ball collision with players
     if ball.colliderect(player):
-        ball_speed_x *= -1
-
-        middle_y = player.y + player.height / 2
-        difference_in_y = middle_y - ball.y
-        reduction_factor = (player.height / 2) / ball_speed_x
-        y_vel = difference_in_y / reduction_factor
-        ball_speed_y = -1 * y_vel
-
+        ball_speed_x, ball_speed_y = reflect_ball(ball, player)
         count_score_player()
 
     if ball.colliderect(opponent):
+        ball_speed_x, ball_speed_y = reflect_ball(ball, opponent)
         ball_speed_x *= -1
-
-        middle_y = opponent.y + opponent.height / 2
-        difference_in_y = middle_y - ball.y
-        reduction_factor = (opponent.height / 2) / ball_speed_x
-        y_vel = difference_in_y / reduction_factor
-        ball_speed_y = -1 * y_vel
-
+        ball_speed_y *= -1
         count_score_opponent()
 
 # Function to move the opponent paddle
 def opponent_movement():
-    if opponent.top < ball.y:
-        opponent.top += opponent_speed
+    # Calculate the target position for the opponent paddle
+    target_y = ball.y + ball.height / 2
 
-    if opponent.bottom > ball.y:
-        opponent.bottom -= opponent_speed
+    # Adjust opponent paddle's position towards the target
+    if opponent.centery < target_y:
+        opponent.centery += min(opponent_speed, target_y - opponent.centery)
+    elif opponent.centery > target_y:
+        opponent.centery -= min(opponent_speed, opponent.centery - target_y)
 
     if opponent.top <= 0:
         opponent.top = 0
@@ -171,8 +181,9 @@ opponent_lives = 5
 background_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
 
-ball_speed_x = 7 * random.choice((1, -1))
-ball_speed_y = 7 * random.choice((1, -1))
+ball_speed = 7
+ball_speed_x = ball_speed * random.choice((1, -1))
+ball_speed_y = ball_speed * random.choice((1, -1))
 
 player_speed = 0
 opponent_speed = 7
@@ -219,7 +230,7 @@ def main():
 
         if opponent_lives < 0 or (game_time_sec < 0 and score_player > score_opponent):
             winning_menu()
-        else:
+        elif game_time_sec < 0 and score_player < score_opponent:
             game_over_menu()
 
         # Update display and limit FPS
