@@ -232,6 +232,8 @@ def main():
             winning_menu()
         elif game_time_sec < 0 and score_player < score_opponent:
             game_over_menu()
+        elif game_time_sec < 0 and score_player < score_opponent:
+            draw_menu()
 
         # Update display and limit FPS
         pygame.display.flip()
@@ -269,6 +271,25 @@ def winning_menu():
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
 
         begin_label = end_font.render(f"You've won. Your score: {score_player}", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+def draw_menu():
+    title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
+    end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
+    run = True
+    while run:
+        screen.fill(background_color)
+
+        begin_label = title_font.render("It is a draw.", 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
+
+        begin_label = end_font.render(f"Your score: {score_player}", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
 
         pygame.display.update()
