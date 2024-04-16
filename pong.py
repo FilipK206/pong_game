@@ -217,8 +217,10 @@ def main():
         if player_lives < 0:
             game_over_menu()
 
-        if opponent_lives < 0 or game_time_sec < 0:
+        if opponent_lives < 0 or (game_time_sec < 0 and score_player > score_opponent):
             winning_menu()
+        else:
+            game_over_menu()
 
         # Update display and limit FPS
         pygame.display.flip()
