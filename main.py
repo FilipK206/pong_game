@@ -42,6 +42,67 @@ class Paddle:
         if self.rect.bottom > self.screen_height:
             self.rect.bottom = self.screen_height
 
+class MainMenu:
+    def __init__(self, screen, screen_width, screen_height):
+        self.screen = screen
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
+        self.begin_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
+
+    def display_menu(self):
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    run = False
+            self.screen.fill((0, 0, 0))
+            begin_label = self.title_font.render("Welcome to the Pong Game!", 1, (255, 255, 255))
+            self.screen.blit(begin_label, (self.screen_width / 2 - begin_label.get_width() / 2, self.screen_height / 2 - 270))
+
+            begin_label = self.begin_font.render("Press the mouse to begin...", 1, (255, 255, 255))
+            self.screen.blit(begin_label, (self.screen_width / 2 - begin_label.get_width() / 2, self.screen_height / 2 - 180))
+
+            pygame.display.update()
+
+class ResultMenu:
+    def __init__(self, screen, screen_width, screen_height, title_result, text_result, score_player, score_opponent, padding=50):
+        self.screen = screen
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
+        self.end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
+        self.title_result = title_result
+        self.text_result = text_result
+        self.score_player = score_player
+        self.score_opponent = score_opponent
+        self.padding = padding
+
+    def display_menu(self):
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            self.screen.fill((0, 0, 0))
+            begin_label = self.title_font.render(self.title_result, 1, (255, 255, 255))
+            self.screen.blit(begin_label, (self.screen_width / 2 - begin_label.get_width() / 2, self.screen_height / 2 - (2 * self.padding)))
+
+            begin_label = self.end_font.render(self.text_result, 1, (255, 255, 255))
+            self.screen.blit(begin_label, (self.screen_width / 2 - begin_label.get_width() / 2, self.screen_height / 2 - self.padding))
+
+            begin_label = self.end_font.render(f"Your score: {self.score_player}", 1, (255, 255, 255))
+            self.screen.blit(begin_label, (self.screen_width / 2 - begin_label.get_width() / 2, self.screen_height / 2))
+
+            begin_label = self.end_font.render(f"Your opponent score: {self.score_opponent}", 1, (255, 255, 255))
+            self.screen.blit(begin_label, (self.screen_width / 2 - begin_label.get_width() / 2, self.screen_height / 2 + self.padding))
+
+            pygame.display.update()
+
 class Game:
     def __init__(self):
         self.screen_width = 1080
@@ -166,6 +227,30 @@ class Game:
             pygame.display.flip()
 
             self.clock.tick(60)
+
+            if self.player_lives < 0:
+                result_menu = ResultMenu(self.screen, self.screen_width, self.screen_height, "You have lost.",
+                                         "Try next time to be better.", self.score_player, self.score_opponent)
+                result_menu.display_menu()
+                break
+
+            if self.opponent_lives < 0 or (self.game_time_sec < 0 and self.score_player > self.score_opponent):
+                result_menu = ResultMenu(self.screen, self.screen_width, self.screen_height, "You have won!",
+                                         "You are the best!", self.score_player, self.score_opponent)
+                result_menu.display_menu()
+                break
+
+            if self.game_time_sec < 0 and self.score_player < self.score_opponent:
+                result_menu = ResultMenu(self.screen, self.screen_width, self.screen_height, "You have lost.",
+                                         "Try next time to be better.", self.score_player, self.score_opponent)
+                result_menu.display_menu()
+                break
+
+            if self.game_time_sec < 0 and self.score_player == self.score_opponent:
+                result_menu = ResultMenu(self.screen, self.screen_width, self.screen_height, "It is a draw.",
+                                         "Try next time to be better.", self.score_player, self.score_opponent)
+                result_menu.display_menu()
+                break
 
 if __name__ == "__main__":
     pygame.init()
