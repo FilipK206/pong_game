@@ -181,12 +181,13 @@ opponent_lives = 5
 background_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
 
-ball_speed = 7
+ball_speed = 8
 ball_speed_x = ball_speed * random.choice((1, -1))
 ball_speed_y = ball_speed * random.choice((1, -1))
 
+paddle_speed = 9
 player_speed = 0
-opponent_speed = 7
+opponent_speed = paddle_speed
 
 # Main game loop
 def main():
@@ -201,18 +202,18 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
-                    player_speed += 7
+                    player_speed += paddle_speed
                 if event.key == pygame.K_UP:
-                    player_speed -= 7
+                    player_speed -= paddle_speed
 
             if event.type == timer_event:
                 game_time_sec -= 1
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
-                    player_speed -= 7
+                    player_speed -= paddle_speed
                 if event.key == pygame.K_UP:
-                    player_speed += 7
+                    player_speed += paddle_speed
 
         # Draw background and objects
         static_background()
@@ -226,77 +227,45 @@ def main():
 
         # Check for game over or win conditions
         if player_lives < 0:
-            game_over_menu()
+            result_menu("You have lost.", "Try next time to be better.")
 
         if opponent_lives < 0 or (game_time_sec < 0 and score_player > score_opponent):
-            winning_menu()
+            result_menu("You have won!", "You are the best!")
         elif game_time_sec < 0 and score_player < score_opponent:
-            game_over_menu()
+            result_menu("You have lost.", "Try next time to be better.")
         elif game_time_sec < 0 and score_player < score_opponent:
-            draw_menu()
+            result_menu("It is a draw.", "Try next time to be better.")
 
         # Update display and limit FPS
         pygame.display.flip()
         clock.tick(60)
 
-# Function to display game over screen
-def game_over_menu():
+# Function to display results
+def result_menu(title_result, text_result, padding=50):
     title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
     end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
     run = True
     while run:
         screen.fill(background_color)
 
-        begin_label = title_font.render("Game Over!", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
+        begin_label = title_font.render(title_result, 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - (2*padding)))
 
-        begin_label = end_font.render(f"You've lost. Your score: {score_player}", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
-
-        pygame.display.update()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-
-# Function to display win screen
-def winning_menu():
-    title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
-    end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
-    run = True
-    while run:
-        screen.fill(background_color)
-
-        begin_label = title_font.render("Win!!!", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
-
-        begin_label = end_font.render(f"You've won. Your score: {score_player}", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
-
-        pygame.display.update()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-
-def draw_menu():
-    title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
-    end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
-    run = True
-    while run:
-        screen.fill(background_color)
-
-        begin_label = title_font.render("It is a draw.", 1, (255, 255, 255))
-        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - 50))
+        begin_label = end_font.render(text_result, 1, (255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 - padding))
 
         begin_label = end_font.render(f"Your score: {score_player}", 1, (255, 255, 255))
         screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2))
 
+        begin_label = end_font.render(f"Your opponent score: {score_opponent}", 1,(255, 255, 255))
+        screen.blit(begin_label, (screen_width / 2 - begin_label.get_width() / 2, screen_height / 2 + padding))
+
         pygame.display.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+
 
 # Function to display main menu
 def main_menu():
