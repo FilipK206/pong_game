@@ -80,9 +80,24 @@ def ball_animation():
     # Ball collision with players
     if ball.colliderect(player):
         ball_speed_x *= -1
+
+        middle_y = player.y + player.height / 2
+        difference_in_y = middle_y - ball.y
+        reduction_factor = (player.height / 2) / ball_speed_x
+        y_vel = difference_in_y / reduction_factor
+        ball_speed_y = -1 * y_vel
+
         count_score_player()
+
     if ball.colliderect(opponent):
         ball_speed_x *= -1
+
+        middle_y = opponent.y + opponent.height / 2
+        difference_in_y = middle_y - ball.y
+        reduction_factor = (opponent.height / 2) / ball_speed_x
+        y_vel = difference_in_y / reduction_factor
+        ball_speed_y = -1 * y_vel
+
         count_score_opponent()
 
 # Function to move the opponent paddle
