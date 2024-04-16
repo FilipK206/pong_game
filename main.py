@@ -50,6 +50,16 @@ class MainMenu:
         self.title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
         self.begin_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
 
+        self.background_color = pygame.Color('grey12')
+        self.light_grey = (200, 200, 200)
+
+    def static_background(self):
+        self.screen.fill(self.background_color)
+        pygame.draw.aaline(self.screen, self.light_grey, (self.screen_width / 2, 0),
+                           (self.screen_width / 2, self.screen_height))
+        pygame.draw.ellipse(self.screen, self.light_grey,
+                            [self.screen_width / 2 - 110, self.screen_height / 2 - 110, 220, 220], 2)
+
     def display_menu(self):
         run = True
         while run:
@@ -59,7 +69,9 @@ class MainMenu:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     run = False
-            self.screen.fill((0, 0, 0))
+
+            self.static_background()
+
             begin_label = self.title_font.render("Welcome to the Pong Game!", 1, (255, 255, 255))
             self.screen.blit(begin_label, (self.screen_width / 2 - begin_label.get_width() / 2, self.screen_height / 2 - 270))
 
@@ -71,14 +83,21 @@ class MainMenu:
 class ResultMenu:
     def __init__(self, screen, screen_width, screen_height, title_result, text_result, score_player, score_opponent, padding=50):
         self.screen = screen
+
         self.screen_width = screen_width
         self.screen_height = screen_height
+
         self.title_font = pygame.font.SysFont("Bahnschrift", 45, bold=False)
         self.end_font = pygame.font.SysFont("Bahnschrift", 25, bold=False)
+
         self.title_result = title_result
         self.text_result = text_result
+
         self.score_player = score_player
         self.score_opponent = score_opponent
+
+        self.background_color = pygame.Color('grey12')
+
         self.padding = padding
 
     def display_menu(self):
@@ -88,7 +107,9 @@ class ResultMenu:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            self.screen.fill((0, 0, 0))
+
+            self.screen.fill(self.background_color)
+
             begin_label = self.title_font.render(self.title_result, 1, (255, 255, 255))
             self.screen.blit(begin_label, (self.screen_width / 2 - begin_label.get_width() / 2, self.screen_height / 2 - (2 * self.padding)))
 
@@ -202,6 +223,9 @@ class Game:
             self.player_lives -= 1
 
     def run(self):
+        main_menu = MainMenu(self.screen, self.screen_width, self.screen_height)
+        main_menu.display_menu()
+
         running = True
         while running:
             for event in pygame.event.get():
