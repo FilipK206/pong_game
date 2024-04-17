@@ -8,6 +8,16 @@ This is a simple Pong game implemented in Python using the Pygame library.
 
 Pong is a classic arcade game where players control paddles and try to hit a ball past their opponent's paddle. The game features a simple user interface and basic gameplay mechanics.
 
+This repository contains the source code for a Python implementation of the Pong game. The game has been developed using the Pygame library. The primary file `main.py` contains the object-oriented version of the game code. The `pong.py` is the inital version of the game.
+
+## Game Mechanics
+
+The object-oriented version of the Pong game introduces several new mechanics:
+- The game is organized into classes such as `Ball`, `Paddle`, and `Game` to improve code structure and maintainability.
+- The `Ball` class manages the movement and collision of the ball, while the `Paddle` class handles the movement of the player and opponent paddles.
+- Smooth movement of the opponent paddle has been implemented using interpolation, making the opponent's movements more natural and responsive.
+- The game includes a main menu and result menu implemented as classes, allowing players to navigate through different game states seamlessly.
+
 ## Features
 
 - Player vs. computer gameplay
@@ -17,20 +27,17 @@ Pong is a classic arcade game where players control paddles and try to hit a bal
 
 ![Welcome](https://github.com/FilipK206/pong_game/assets/109867923/53e985a8-207a-4495-8bb2-adebb622be5f)
 
-## Installation
 
-To run the game, you need to have Python installed on your system. You can install Pygame library using pip:
+## Usage
 
-pip install pygame
+To play the game, simply run the `main.py` file using Python:
 
-Once installed, you can run the game by executing the `pong.py` file.
+python main.py
 
 ## Controls
 
 - Use the up and down arrow keys to control the player's paddle.
 - The game starts when you click the mouse.
-- If you lose all your lives, the game ends and displays a "Game Over" screen.
-- If you win or the timer runs out, the game displays a "Win" screen.
 
 ## Credits
 
