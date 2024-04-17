@@ -154,6 +154,7 @@ class Game:
         self.opponent_lives = 5
 
         self.ball_speed = 8
+        self.opponent_speed = 8
 
     def draw_mov_obj(self):
         pygame.draw.rect(self.screen, self.light_grey, self.player.rect)
@@ -200,10 +201,13 @@ class Game:
 
     def opponent_movement(self):
         target_y = self.ball.rect.y + self.ball.rect.height / 2
-        if self.opponent.rect.centery < target_y:
-            self.opponent.move_down()
-        elif self.opponent.rect.centery > target_y:
-            self.opponent.move_up()
+        current_y = self.opponent.rect.centery
+
+        if current_y < target_y:
+            self.opponent.rect.centery += min(self.ball_speed, target_y - current_y)
+        elif current_y > target_y:
+            self.opponent.rect.centery -= min(self.ball_speed, current_y - target_y)
+
         self.opponent.limit_movement()
 
     def player_movement(self):
@@ -264,13 +268,13 @@ class Game:
                 result_menu.display_menu()
                 break
 
-            if self.game_time_sec < 0 and self.score_player < self.score_opponent:
+            elif self.game_time_sec < 0 and self.score_player < self.score_opponent:
                 result_menu = ResultMenu(self.screen, self.screen_width, self.screen_height, "You have lost.",
                                          "Try next time to be better.", self.score_player, self.score_opponent)
                 result_menu.display_menu()
                 break
 
-            if self.game_time_sec < 0 and self.score_player == self.score_opponent:
+            elif self.game_time_sec < 0 and self.score_player == self.score_opponent:
                 result_menu = ResultMenu(self.screen, self.screen_width, self.screen_height, "It is a draw.",
                                          "Try next time to be better.", self.score_player, self.score_opponent)
                 result_menu.display_menu()
